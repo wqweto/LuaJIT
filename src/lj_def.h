@@ -145,12 +145,20 @@ typedef uintptr_t BloomFilter;
 #define LJ_FASTCALL	__attribute__((fastcall))
 #endif
 
+#if defined(__TINYC__) && (defined(__i386__) || defined(__x86_64__))
+#undef WIN32_LEAN_AND_MEAN
+static LJ_AINLINE uint32_t lj_ffs(uint32_t x)
+{
+  uint32_t r; __asm__("bsf %1, %0" : "=r" (r) : "rm" (x) : "cc"); return r;
+}
+#else
 #define LJ_LIKELY(x)	__builtin_expect(!!(x), 1)
 #define LJ_UNLIKELY(x)	__builtin_expect(!!(x), 0)
-
 #define lj_ffs(x)	((uint32_t)__builtin_ctz(x))
+#endif
+
 /* Don't ask ... */
-#if defined(__INTEL_COMPILER) && (defined(__i386__) || defined(__x86_64__))
+#if (defined(__INTEL_COMPILER) || defined(__TINYC__)) && (defined(__i386__) || defined(__x86_64__))
 static LJ_AINLINE uint32_t lj_fls(uint32_t x)
 {
   uint32_t r; __asm__("bsrl %1, %0" : "=r" (r) : "rm" (x) : "cc"); return r;
@@ -201,7 +209,7 @@ static LJ_AINLINE uint32_t lj_bswap(uint32_t x)
   uint32_t r; __asm__("bswap %0" : "=r" (r) : "0" (x)); return r;
 }
 
-#if defined(__i386__)
+#if defined(__i386__) || defined(__TINYC__)
 static LJ_AINLINE uint64_t lj_bswap64(uint64_t x)
 {
   return ((uint64_t)lj_bswap((uint32_t)x)<<32) | lj_bswap((uint32_t)(x>>32));
@@ -225,15 +233,15 @@ static LJ_AINLINE uint64_t lj_bswap64(uint64_t x)
 }
 #endif
 
-typedef union __attribute__((packed)) Unaligned16 {
+typedef union Unaligned16 {
   uint16_t u;
   uint8_t b[2];
-} Unaligned16;
+} __attribute__((packed)) Unaligned16;
 
-typedef union __attribute__((packed)) Unaligned32 {
+typedef union Unaligned32 {
   uint32_t u;
   uint8_t b[4];
-} Unaligned32;
+} __attribute__((packed)) Unaligned32;
 
 /* Unaligned load of uint16_t. */
 static LJ_AINLINE uint16_t lj_getu16(const void *p)
