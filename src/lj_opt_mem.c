@@ -862,7 +862,8 @@ TRef LJ_FASTCALL lj_opt_fwd_tab_len(jit_State *J)
     IRIns *store = IR(ref);
     IRIns *href = IR(store->op1);
     IRIns *key = IR(href->op2);
-    if (irt_isnum(key->o == IR_KSLOT ? IR(key->op1)->t : key->t)) {
+    IRType1 t = key->o == IR_KSLOT ? IR(key->op1)->t : key->t;
+    if (irt_isnum(t)) {
       lim = ref;  /* Conflicting store found, limits search for TLEN. */
       break;
     }
