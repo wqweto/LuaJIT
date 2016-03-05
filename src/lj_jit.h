@@ -92,26 +92,26 @@
 
 /* Optimization parameters and their defaults. Length is a char in octal! */
 #define JIT_PARAMDEF(_) \
-  _(\010, maxtrace,	1000)	/* Max. # of traces in cache. */ \
-  _(\011, maxrecord,	4000)	/* Max. # of recorded IR instructions. */ \
-  _(\012, maxirconst,	500)	/* Max. # of IR constants of a trace. */ \
-  _(\007, maxside,	100)	/* Max. # of side traces of a root trace. */ \
-  _(\007, maxsnap,	500)	/* Max. # of snapshots for a trace. */ \
-  _(\011, minstitch,	0)	/* Min. # of IR ins for a stitched trace. */ \
+  _("\010", maxtrace,	1000)	/* Max. # of traces in cache. */ \
+  _("\011", maxrecord,	4000)	/* Max. # of recorded IR instructions. */ \
+  _("\012", maxirconst,	500)	/* Max. # of IR constants of a trace. */ \
+  _("\007", maxside,	100)	/* Max. # of side traces of a root trace. */ \
+  _("\007", maxsnap,	500)	/* Max. # of snapshots for a trace. */ \
+  _("\011", minstitch,	0)	/* Min. # of IR ins for a stitched trace. */ \
   \
-  _(\007, hotloop,	56)	/* # of iter. to detect a hot loop/call. */ \
-  _(\007, hotexit,	10)	/* # of taken exits to start a side trace. */ \
-  _(\007, tryside,	4)	/* # of attempts to compile a side trace. */ \
+  _("\007", hotloop,	56)	/* # of iter. to detect a hot loop/call. */ \
+  _("\007", hotexit,	10)	/* # of taken exits to start a side trace. */ \
+  _("\007", tryside,	4)	/* # of attempts to compile a side trace. */ \
   \
-  _(\012, instunroll,	4)	/* Max. unroll for instable loops. */ \
-  _(\012, loopunroll,	15)	/* Max. unroll for loop ops in side traces. */ \
-  _(\012, callunroll,	3)	/* Max. unroll for recursive calls. */ \
-  _(\011, recunroll,	2)	/* Min. unroll for true recursion. */ \
+  _("\012", instunroll,	4)	/* Max. unroll for instable loops. */ \
+  _("\012", loopunroll,	15)	/* Max. unroll for loop ops in side traces. */ \
+  _("\012", callunroll,	3)	/* Max. unroll for recursive calls. */ \
+  _("\011", recunroll,	2)	/* Min. unroll for true recursion. */ \
   \
   /* Size of each machine code area (in KBytes). */ \
-  _(\011, sizemcode,	JIT_P_sizemcode_DEFAULT) \
+  _("\011", sizemcode,	JIT_P_sizemcode_DEFAULT) \
   /* Max. total size of all machine code areas (in KBytes). */ \
-  _(\010, maxmcode,	512) \
+  _("\010", maxmcode,	512) \
   /* End of list. */
 
 enum {
@@ -121,7 +121,7 @@ JIT_PARAMDEF(JIT_PARAMENUM)
   JIT_P__MAX
 };
 
-#define JIT_PARAMSTR(len, name, value)	#len #name
+#define JIT_PARAMSTR(len, name, value)	len #name
 #define JIT_P_STRING	JIT_PARAMDEF(JIT_PARAMSTR)
 
 /* Trace compiler state. */

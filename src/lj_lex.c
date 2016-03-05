@@ -30,7 +30,7 @@
 /* Lua lexer token names. */
 static const char *const tokennames[] = {
 #define TKSTR1(name)		#name,
-#define TKSTR2(name, sym)	#sym,
+#define TKSTR2(name, sym)	sym,
 TKDEF(TKSTR1, TKSTR2)
 #undef TKSTR1
 #undef TKSTR2
