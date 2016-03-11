@@ -123,7 +123,8 @@ TRef LJ_FASTCALL lj_ir_emit(jit_State *J)
   ir->op1 = fins->op1;
   ir->op2 = fins->op2;
   J->guardemit.irt |= fins->t.irt;
-  return TREF(ref, irt_t((ir->t = fins->t)));
+  ir->t = fins->t;
+  return TREF(ref, irt_t(ir->t));
 }
 
 /* Emit call to a C function. */
