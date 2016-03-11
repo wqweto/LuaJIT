@@ -2458,7 +2458,7 @@ TRef LJ_FASTCALL lj_opt_cse(jit_State *J)
     J->chain[op] = (IRRef1)ref;
     ir->o = fins->o;
     J->guardemit.irt |= fins->t.irt;
-	ir->t = fins->t;
+    ir->t = fins->t;
     return TREF(ref, irt_t(ir->t));
   }
 }
