@@ -6,7 +6,6 @@ set PATH=C:\Work\Temp\Lua\lua_forum\tcc-0.9.26\win32;%PATH%
 (where tcc > nul 2>&1) || goto :FAIL
 
 set LJHOSTCOMPILE=tcc -c -D__GNUC__=4
-::set LJCOMPILE=tcc -c -D__GNUC__=4 -DLUA_USE_APICHECK -DLUA_USE_ASSERT -g
 set LJCOMPILE=tcc -c -D__GNUC__=4
 set LJLINK=tcc -L.
 set LJMT=mt /nologo
@@ -65,8 +64,8 @@ if errorlevel 1 goto :BAD
 
 if "%1" neq "debug" goto :NODEBUG
 shift
-set LJCOMPILE=%LJCOMPILE% -g -b
-set LJLINK=%LJLINK% -g -b
+set LJCOMPILE=%LJCOMPILE% -DLUA_USE_APICHECK -DLUA_USE_ASSERT -g
+set LJLINK=%LJLINK% -g
 :NODEBUG
 if "%1"=="amalg" goto :AMALGDLL
 if "%1"=="static" goto :STATIC
